@@ -1,0 +1,22 @@
+*{
+    margin-right:25px  ;
+    margin-left: 5px;
+}
+.navbar{
+   display:  flex;
+   justify-content:flex-end;
+  
+
+ 
+}
+h1{
+    font-size: medium;
+}
+input{
+   width: 100%;
+}
+#btn{
+    background-color: black;
+    color: white;
+     width: 65px;
+}

@@ -1,0 +1,88 @@
+
+
+ <!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/Style.css">
+	<title>Dashboard</title>
+	
+</head>
+<body>
+	<h1>Welcome back <span id="username"></span>!</h1>
+    <h1>Your Email ID <span id="mail"></span></h1>
+	
+	<form id="password-form">
+		<label for="old-password">Old Password:</label>
+		<input type="password" id="old-password"><br><br>
+		
+		<label for="new-password">New Password:</label>
+		<input type="password" id="new-password"><br><br>
+        <label for="change-password">Change Password:</label>
+		<input type="password" id="change-password"><br><br>
+
+        <button type="submit" id="btn"> Change</button><br></Br>
+        
+        <button  id="btn"type="submit"> Logout</button>
+
+    </form>
+    <script>
+        <script>
+		window.onload = function() {
+			// Check if currentUser exists in localStorage. If not, redirect to login page.
+			let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+			if (!currentUser) {
+				window.location.href = 'login.html';
+			} else {
+				// Display current user's name on dashboard
+				document.getElementById('username').innerHTML = currentUser.name;
+			}
+			
+			// Handle form submission for changing password
+			document.getElementById('password-form').addEventListener('submit', function(event) {
+				event.preventDefault(); // prevent default form submission behavior
+				
+				// Get form values
+				let oldPassword = document.getElementById('old-password').value;
+				let newPassword = document.getElementById('new-password').value;
+				let confirmNewPassword = document.getElementById('confirm-new-password').value;
+				
+				// Validate form fields
+				if (!oldPassword || !newPassword || !confirmNewPassword) {
+					alert('Please fill all fields.');
+				} else if (newPassword !== confirmNewPassword) {
+					alert('New password and confirm password fields do not match.');
+				} else {
+					// Check if old password matches current user's password
+					if (oldPassword === currentUser.pass) {
+						// Update current user's password in localStorage
+						currentUser.pass = newPassword;
+						localStorage.setItem('currentUser', JSON.stringify(currentUser));
+						
+						// Display success message
+						alert('Password updated successfully!');
+						
+						// Reset form fields
+						document.getElementById('old-password').value = '';
+						document.getElementById('new-password').value = '';
+						document.getElementById('confirm-new-password').value = '';
+					} else {
+						// Display error message
+						alert('Old password is incorrect.');
+					}
+				}
+			});
+			
+			// Handle logout button click
+			document.getElementById('logout-btn').addEventListener('click', function() {
+				// Remove currentUser from localStorage
+				localStorage.removeItem('currentUser');
+				
+				// Redirect to login page
+				window.location.href = 'login.html';
+			});
+		}
+	</script>
+</body>
+</html>
+		
+		

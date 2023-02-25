@@ -8,27 +8,76 @@
     <title> Teacher Portal</title>
 </head>
 <body>
-    <nav class="navbar">
+    <header>
+		<a class="navbar-brand" href="#">Teacher's Portal</a>
+		<nav class="navbar">
     
-                 <a  href="#">Signup</a>
+                 <a  href="#" >Signup</a>
                 <a href="#">Login</a>
-            
-
         </nav>
+
+	</header>
+    
     <h1> Teachers login</h1>
 
-        <form action="soumyaranjannayak0140@gmail.com">
+        <form  id="login-form">
             
             <label for="Email"></label> <br>
-            <input type="email" id="email" placeholder="Email"> <br>
+            <input type="email" id="email" placeholder="Email" class="form-control" required> <br>
             <label for="password"></label> <br>
-            <input type="password" id="password" placeholder="password"> <br> <br>
+            <input type="password" id="password" placeholder="password" class="form-control" required> <br> <br>
             
     
               <button id="btn" type="submit" >Login</button>
          </form>
-    
- 
+         <p id="error-msg" style="color: red;"></p>
 
+         <script>
+            var currentitem = JSON.parse(localStorage.getItem("currentUser"));
+  if(currentitem){
+    window.location.href = "dashboard.html";
+  }
+  const login = document.getElementById('login-form');
+      const errorloginMsg = document.getElementById('error-msg');
+      login.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const email = login.elements['email'].value.trim();
+        const password = login.elements['password'].value;
+  
+        
+  
+        let formData = JSON.parse(localStorage.getItem('users')) || [];
+          
+       const currentUser = formData.find(user => user.email === email && user.password === password);
+       if (currentUser) {
+          
+          const currentUserObj = {
+            email: currentUser.email,
+            name: currentUser.name,
+        
+            token: generateToken(),
+          };
+        
+          localStorage.setItem('currentUser', JSON.stringify(currentUserObj));
+      
+          window.location.href = 'dashboard.html';
+        } else {
+        
+          errorloginMsg.textContent = 'Invalid email or password. Please try again.';
+        }
+          
+      });
+     
+      
+      function generateToken() {
+        const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let token = '';
+        for (let i = 0; i < 16; i++) {
+          token += charset.charAt(Math.floor(Math.random() * charset.length));
+        }
+        return token;
+      }
+         </script>
 </body>
 </html>

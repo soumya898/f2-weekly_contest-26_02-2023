@@ -3,22 +3,37 @@
  <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="/Style.css">
+    <link rel="stylesheet" href="Style.css">
 	<title>Dashboard</title>
 	
 </head>
 <body>
+    <header>
+		<a class="navbar-brand" href="#">Teacher's Portal</a>
+		<nav class="navbar">
+    
+                 <a  href="#" >Signup</a>
+                <a href="#">Login</a>
+        </nav>
+
+	</header>
+    
+    
+
+
+
+
 	<h1>Welcome back <span id="username"></span>!</h1>
-    <h1>Your Email ID <span id="mail"></span></h1>
-	
+    <h1>Your Email ID <span id="mail"></span></h1> <br> <br>
+	<h1> Change Password </h1> <br> 
 	<form id="password-form">
-		<label for="old-password">Old Password:</label>
-		<input type="password" id="old-password"><br><br>
+		<label for="old-password"></label>
+		<input type="password" id="old-password" placeholder="old Pasword"><br><br>
 		
-		<label for="new-password">New Password:</label>
-		<input type="password" id="new-password"><br><br>
-        <label for="change-password">Change Password:</label>
-		<input type="password" id="change-password"><br><br>
+		<label for="new-password"></label>
+		<input type="password" id="new-password" placeholder="new Password"><br><br>
+        <label for="change-password"></label>
+		<input type="password" id="change-password" placeholder="Confirm new password "><br><br>
 
         <button type="submit" id="btn"> Change</button><br></Br>
         
@@ -26,7 +41,7 @@
 
     </form>
     <script>
-        <script>
+      
 		window.onload = function() {
 			// Check if currentUser exists in localStorage. If not, redirect to login page.
 			let currentUser = JSON.parse(localStorage.getItem('currentUser'));

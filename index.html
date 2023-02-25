@@ -8,67 +8,91 @@
     <title> Teacher Portal</title>
 </head>
 <body>
-    <nav class="navbar">
+	<header>
+		<a class="navbar-brand" href="#">Teacher's Portal</a>
+		<nav class="navbar">
     
-                 <a  href="#">Signup</a>
+            <a href="index.html" >Signup</a>
                 <a href="#">Login</a>
-            
-
         </nav>
+
+
+
+	</header>
+    
     
  
 
-    <h1> Teachers Signup </h1>
+    <h1 > Teachers Signup </h1>
 
-     <form action="soumyaranjannayak0140@gmail.com">
+     <form id="Signup-form">
         <label for="fullname"></label> <br>
-        <input type="text" id="fullname" placeholder="Full Name"> <br>
+        <input type="text" id="fullname" placeholder="Full Name"  name="name"  class="form-control" required> <br>
         <label for="Email"></label> <br>
-        <input type="email" id="email" placeholder="Email"> <br>
+        <input type="email" id="email" placeholder="Email" name="email"  class="form-control"  required> <br>
         <label for="password"></label> <br>
-        <input type="password" id="password" placeholder="password"> <br>
+        <input type="password" id="password" placeholder="password"  name="password"  class="form-control" required> <br>
         <label for="confirm password"></label> <br>
-        <input type="password" id="confirmpassword" placeholder= "confirm password"> <br><br>
+        <input type="password" id="confirmpassword" name="password" placeholder= "confirm password"  class="form-control"  required> <br><br>
 
-          <button id="btn" type="submit" >Signup</button>
+        <button id="btn" type="submit" value="Signup" >Signup</button>
      </form>
+	 <p id="error-msg" style="color: red;"></p>
+
+
+
      <script>
       
-		function validateForm() {
-			var email = document.forms["signupForm"]["email"].value;
-			var password = document.forms["signupForm"]["password"].value;
-			var confirmPassword = document.forms["signupForm"]["confirmPassword"].value;
-			var name = document.forms["signupForm"]["name"].value;
+	  var currentitem = JSON.parse(localStorage.getItem("currentUser"));
+		if(currentitem){
+  		window.location.href = "dashboard.html";
+}
+    const users = JSON.parse(localStorage.getItem('users')) || [];
 
-			// Email validation
-			var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			if (!emailRegex.test(email)) {
-				alert("Invalid email address");
-				return false;
-			}
+    const form = document.getElementById('Signup-form');
+    const errorMsg = document.getElementById('error-msg'); 
 
-			// Password validation
-			if (password != confirmPassword) {
-				alert("Passwords do not match");
-				return false;
-			}
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-			// Name validation
-			if (name == "") {
-				alert("Name cannot be empty");
-				return false;
-			}
+      const name = form.elements['name'].value.trim();
+      const email = form.elements['email'].value.trim();
+      const password = form.elements['password'].value;
+      const confirmPassword = form.elements['confirmpassword'].value;
 
-			// Signup successful
-			var users = JSON.parse(localStorage.getItem("users")) || [];
-			var user = {email: email, password: password, name: name};
-			users.push(user);
-			localStorage.setItem("users", JSON.stringify(users));
-			alert("Signup successful. Please login.");
-			return true;
-		}
+      if (!name) {
+        errorMsg.textContent = 'Name cannot be empty.';
+        return;
+      }
+    
+      if (!email || !isValidEmail(email)) {
+        errorMsg.textContent = 'Please enter a valid email address.';
+        return;
+      }
+    
+      if (!password) {
+        errorMsg.textContent = 'Password cannot be empty';
+        return;
+      }
+    
+      if (password !== confirmPassword) {
+        errorMsg.textContent = 'Passwords do not match.';
+        return;
+      }
+
+      const user = { name, email, password };
+      users.push(user);
+  
+      localStorage.setItem('users', JSON.stringify(users));
+      window.location.href = 'login.html';
+    });
+
+    function isValidEmail(email) {
+     
+      return /\S+@\S+\.\S+/.test(email);
+    }
 	</script>
-     </script>
+    
 
     
 </body>
